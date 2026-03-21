@@ -1,6 +1,4 @@
 # cylinder-leakage-system
-Gas Leakage Detection and Monitoring System
-
 An IoT-based real-time gas leakage detection system using ESP8266 NodeMCU, MQ Gas Sensor, and ThingSpeak Cloud Platform.
 
 ![Platform](https://img.shields.io/badge/Platform-ESP8266%20NodeMCU-blue)
@@ -22,13 +20,6 @@ An IoT-based real-time gas leakage detection system using ESP8266 NodeMCU, MQ Ga
 - [Algorithm](#algorithm)
 - [Getting Started](#getting-started)
 - [ThingSpeak Setup](#thingspeak-setup)
-- [Code Walkthrough](#code-walkthrough)
-- [Results](#results)
-- [Advantages & Limitations](#advantages--limitations)
-- [Future Work](#future-work)
-- [Team](#team)
-- [Acknowledgements](#acknowledgements)
-- [References](#references)
 
 ---
 
@@ -40,22 +31,18 @@ The widespread use of LPG and other flammable gases in homes, restaurants, and i
 - Provides **instant local alerts** via a buzzer when levels exceed a threshold
 - Transmits sensor data to **ThingSpeak Cloud** for real-time visualization and remote monitoring
 - Operates continuously at low cost with minimal infrastructure
-
-> Developed under the **IoT Club**, Department of Electronics & Telecommunication Engineering  
-> Bharati Vidyapeeth's College of Engineering for Women, Pune – 43  
-> Savitribai Phule Pune University
-
+  
 ---
 
 ## Features
 
-- ✅ Real-time gas concentration monitoring (0–1000 ppm range)
-- ✅ Audible buzzer alert when gas levels exceed safe threshold (>100 ppm)
-- ✅ Cloud dashboard via ThingSpeak for remote monitoring
-- ✅ Wi-Fi connectivity using ESP8266 (no additional hardware needed)
-- ✅ Low-cost, compact, and energy-efficient design
-- ✅ Continuous 24/7 operation capability
-- ✅ Long-term data logging for trend analysis
+-  Real-time gas concentration monitoring (0–1000 ppm range)
+-  Audible buzzer alert when gas levels exceed safe threshold (>100 ppm)
+-  Cloud dashboard via ThingSpeak for remote monitoring
+-  Wi-Fi connectivity using ESP8266 (no additional hardware needed)
+-  Low-cost, compact, and energy-efficient design
+-  Continuous 24/7 operation capability
+-  Long-term data logging for trend analysis
 
 ---
 
@@ -93,6 +80,15 @@ The widespread use of LPG and other flammable gases in homes, restaurants, and i
 | Breadboard | For prototyping connections | 1 |
 | Jumper Wires | Male-to-male / male-to-female | As needed |
 
+## Software Requirements
+
+| Tool | Purpose |
+|------|---------|
+| [Arduino IDE](https://www.arduino.cc/en/software) | Programming the ESP8266 |
+| [ESP8266 Board Package](https://arduino.esp8266.com/stable/package_esp8266com_index.json) | ESP8266 support in Arduino IDE |
+| [ThingSpeak Library](https://github.com/mathworks/thingspeak-arduino) | Cloud data upload |
+| [ThingSpeak Account](https://thingspeak.com) | Free IoT cloud platform |
+
 ### Pin Connections
 
 | Component | ESP8266 Pin | Notes |
@@ -104,15 +100,6 @@ The widespread use of LPG and other flammable gases in homes, restaurants, and i
 | Buzzer (–) | GND | Common ground |
 
 ---
-
-## Software Requirements
-
-| Tool | Purpose |
-|------|---------|
-| [Arduino IDE](https://www.arduino.cc/en/software) | Programming the ESP8266 |
-| [ESP8266 Board Package](https://arduino.esp8266.com/stable/package_esp8266com_index.json) | ESP8266 support in Arduino IDE |
-| [ThingSpeak Library](https://github.com/mathworks/thingspeak-arduino) | Cloud data upload |
-| [ThingSpeak Account](https://thingspeak.com) | Free IoT cloud platform |
 
 ### Arduino Libraries Required
 
@@ -211,53 +198,6 @@ const char* myWriteAPIKey     = "YOUR_WRITE_API_KEY";
 
 ---
 
-## Code Walkthrough
-
-The main source file is [`src/gas_leakage_detection.ino`](src/gas_leakage_detection.ino).
-
-```cpp
-#include <ESP8266WiFi.h>
-#include <ThingSpeak.h>
-
-// WiFi & ThingSpeak credentials
-const char* ssid     = "YOUR_SSID";
-const char* password = "YOUR_PASSWORD";
-unsigned long myChannelNumber = YOUR_CHANNEL_ID;
-const char* myWriteAPIKey     = "YOUR_API_KEY";
-
-WiFiClient client;
-int gasSensorPin = A0;
-int buzzer1      = D0;
-
-void setup() {
-  Serial.begin(115200);
-  WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED) { delay(1000); }
-  ThingSpeak.begin(client);
-  pinMode(buzzer1, OUTPUT);
-  digitalWrite(buzzer1, LOW);
-}
-
-void loop() {
-  int gasValue  = analogRead(A0);
-  float gasPPM  = map(gasValue, 0, 1023, 0, 1000);
-
-  Serial.print("Gas Sensor Value: ");
-  Serial.println(gasPPM);
-
-  ThingSpeak.writeField(myChannelNumber, 1, gasPPM, myWriteAPIKey);
-
-  if (gasPPM > 100) {
-    digitalWrite(buzzer1, HIGH);
-    Serial.println("Gas level HIGH!!!");
-  } else {
-    digitalWrite(buzzer1, LOW);
-  }
-
-  delay(3000);
-}
-```
-
 > **Note:** Replace placeholder credentials before uploading. Never commit real API keys to public repositories — use environment variables or a `secrets.h` file (see `.gitignore`).
 
 ---
@@ -275,78 +215,8 @@ The system was successfully tested with the following observations:
 
 ---
 
-## Advantages & Limitations
 
-### ✅ Advantages
 
-- **Real-time monitoring** — continuous cloud updates via ThingSpeak
-- **Early warning** — instant buzzer alert prevents fire/explosion risks
-- **Remote accessibility** — monitor from anywhere via ThingSpeak dashboard
-- **Low cost** — affordable components (MQ sensor + ESP8266 + buzzer)
-- **Energy-efficient** — suitable for 24/7 continuous operation
-- **Scalable** — easily extended with more sensors (temperature, smoke, CO₂)
-- **Compact** — easy to install in homes, labs, or vehicles
 
-### ⚠️ Limitations
 
-- MQ sensors are sensitive to humidity and temperature variations
-- Requires continuous Wi-Fi for cloud uploads
-- ThingSpeak free tier limits updates to every 15 seconds
-- No battery backup — system fails during power outages
 
----
-
-## Future Work
-
-| Enhancement | Description |
-|-------------|-------------|
-| Multi-gas Detection | Add MQ-7 (CO), MQ-135 (CO₂) for broader coverage |
-| Mobile App | Push notifications via Android/iOS app |
-| AI Prediction | ML model to predict leaks before threshold breach |
-| Battery/Solar Power | Backup power for uninterrupted operation |
-| Auto Ventilation | Trigger exhaust fans / shutoff valves automatically |
-| Voice Alerts | Integration with Alexa or Google Assistant |
-| Industrial Version | Rugged, long-range model for factories and refineries |
-
----
-
-## Team
-
-Developed by students of **BE Electronics & Telecommunication Engineering**  
-Under the **IoT Club**, Bharati Vidyapeeth's College of Engineering for Women, Pune
-
-| Roll No. | Name |
-|----------|------|
-| 41124 | Shreya Dhane |
-| 41133 | Diksha Gunje |
-| 41137 | Sophiya Inamdar |
-| 41143 | Siddhi Jaiswal |
-| 41152 | Samruddhi Kale |
-| 41167 | Sneha Dalavi |
-| 41171 | Sayali Shinde |
-
-**Guide:** Prof. Dr. Savita Itkarkar (Club In-Charge)  
-**HOD:** Prof. Dr. S. R. Patil
-
----
-
-## Acknowledgements
-
-We extend our sincere gratitude to **Prof. Dr. P. V. Jadhav** (Principal), **Prof. Dr. S. R. Patil** (HOD), and the **IoT Club** of the Department of Electronics and Telecommunication Engineering for their constant motivation, guidance, and support throughout this project.
-
----
-
-## References
-
-1. [LPG Gas Leakage Detection Using IoT](https://www.researchgate.net/publication/354309093) — ResearchGate, 2025
-2. [Implementation of a Gas Leakage Detection System Using MQ-6 Sensor](https://www.researchgate.net/publication/361937209) — ResearchGate, 2025
-3. [IoT-based Fire and Gas Monitoring System](https://www.researchgate.net/publication/353708037) — ResearchGate, 2025
-4. NK Jumaa — [IoT Based Gas Leakage Detection and Alarming System](https://pdfs.semanticscholar.org/ce34/dbedfcb62ee62e9e91578075bdfc6180bd66.pdf) — Semantic Scholar, 2022
-5. N. Fuadi et al. — [Gas Leakage Monitoring System Based on Android and NodeMCU ESP8266](https://www.researchgate.net/publication/385404219) — ResearchGate, 2024
-6. M.A. Baballe — [Automatic Gas Leakage Monitoring System Using MQ-5](https://ideas.repec.org/a/pkp/rocere/v8y2021i2p64-75id1488.html) — 2021
-7. [Arduino IDE Documentation](https://www.arduino.cc/en/software)
-8. [ThingSpeak IoT Platform](https://thingspeak.com)
-
----
-
-*© 2025 — IoT Club, Dept. of Electronics & Telecommunication Engineering, Bharati Vidyapeeth's College of Engineering for Women, Pune*
