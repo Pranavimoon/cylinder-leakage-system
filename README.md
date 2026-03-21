@@ -101,15 +101,6 @@ The widespread use of LPG and other flammable gases in homes, restaurants, and i
 
 ---
 
-### Arduino Libraries Required
-
-```
-ESP8266WiFi.h     - Built-in with ESP8266 board package
-ThingSpeak.h      - Install via Arduino Library Manager
-```
-
----
-
 ## Circuit Diagram
 
 > See [`docs/circuit_diagram.jpg`](docs/circuit_diagram.jpg) for the full wiring schematic.
