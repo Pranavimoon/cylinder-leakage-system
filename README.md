@@ -72,7 +72,7 @@ The widespread use of LPG and other flammable gases in homes, restaurants, and i
 ## Hardware Requirements
 
 | Component | Description | Quantity | Cost(INR) |
-|-----------|-------------|----------|
+|-----------|-------------|----------|-----------|
 | ESP8266 NodeMCU | Wi-Fi enabled microcontroller (Espressif ESP8266EX) | 1 | | ₹180 |
 | MQ Gas Sensor | Detects LPG, methane, propane, CO, smoke (MQ-2/MQ-5/MQ-6) | 1 | | ₹90 |
 | Buzzer | Active buzzer for audible alert | 1 | | ₹50 |
