@@ -20,6 +20,7 @@ An IoT-based real-time gas leakage detection system using ESP8266 NodeMCU, MQ Ga
 - [Algorithm](#algorithm)
 - [Getting Started](#getting-started)
 - [ThingSpeak Setup](#thingspeak-setup)
+- [Results](#results)
 
 ---
 
@@ -134,7 +135,7 @@ END
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/<your-username>/gas-leakage-detection.git
+git clone https://github.com/<https://github.com/Pranavimoon>/gas-leakage-detection.git
 cd gas-leakage-detection
 ```
 
@@ -160,7 +161,7 @@ Open `src/gas_leakage_detection.ino` and update:
 const char* ssid     = "YOUR_WIFI_SSID";
 const char* password = "YOUR_WIFI_PASSWORD";
 
-unsigned long myChannelNumber = YOUR_CHANNEL_ID;
+unsigned long myChannelNumber = "YOUR_CHANNEL_ID";
 const char* myWriteAPIKey     = "YOUR_WRITE_API_KEY";
 ```
 
@@ -186,7 +187,8 @@ const char* myWriteAPIKey     = "YOUR_WRITE_API_KEY";
 
 ---
 
-> **Note:** Replace placeholder credentials before uploading. Never commit real API keys to public repositories — use environment variables or a `secrets.h` file (see `.gitignore`).
+> **Note:** Replace placeholder credentials before uploading.
+> Never commit real API keys to public repositories — use a `secrets.h` file (see `.gitignore`).
 
 ---
 
@@ -198,8 +200,6 @@ The system was successfully tested with the following observations:
 - Buzzer activated reliably when gas levels exceeded the 100 ppm threshold
 - Data uploaded to cloud at ~3-second intervals with stable Wi-Fi connectivity
 - Remote monitoring confirmed functional from separate devices via ThingSpeak URL
-
-> See [`docs/results/`](docs/results/) for screenshots of the ThingSpeak dashboard and hardware setup.
 
 ---
 
