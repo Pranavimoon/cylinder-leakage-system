@@ -102,8 +102,6 @@ The widespread use of LPG and other flammable gases in homes, restaurants, and i
 
 ## Circuit Diagram
 
-> See [`docs/circuit_diagram.jpg`](docs/circuit_diagram.jpg) for the full wiring schematic.
-
 **Quick Reference:**
 - MQ sensor analog output → ESP8266 `A0`
 - Buzzer signal pin → ESP8266 `D0`
